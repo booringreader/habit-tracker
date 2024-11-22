@@ -1,70 +1,158 @@
-# Getting Started with Create React App
+frontend: React.js <br>
+backend: Flask <br>
+Databaase: SQLite 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Table of Contents
 
-## Available Scripts
+1. [Clone the Repository](#clone-the-repository)
+2. [Set Up the Backend](#set-up-the-backend)
+3. [Set Up the Frontend](#set-up-the-frontend)
+4. [Run the Application](#run-the-application)
+5. [Test the Application](#test-the-application)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+### Clone the Repository
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Clone the repository to your local machine:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```bash
+git clone https://github.com/booringreader/habit-tracker.git
+cd habit-tracker
+```
+---
 
-### `npm test`
+### Set Up the Backend
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Navigate to the backend directory then create and activate a virtual environment**:
 
-### `npm run build`
+   ```bash
+   cd backend
+   ```
+   - **For macOS/Linux**:
+     ```bash
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+   - **For Windows**:
+     ```bash
+     python -m venv venv
+     .\venv\Scripts\activate
+     ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Install the required backend dependencies**:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   Install the necessary packages for the backend (Flask, Flask-SQLAlchemy, Flask-CORS):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-### `npm run eject`
+   - If `requirements.txt` does not exist, you can create it with the following content:
+     ```txt
+     flask
+     flask_sqlalchemy
+     flask_cors
+     ```
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Set Up the Frontend
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Navigate to the frontend directory & Install the required frontend dependencies**:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   cd frontend
+   ```
+   Make sure you have `Node.js` installed. Then, install the frontend dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   node --version
+   npm --version
+   npm install
+   ```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Run the Application
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Backend
 
-### Code Splitting
+**Start the Flask server on `http://localhost:8000`**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+   In the `backend` folder, run:
 
-### Analyzing the Bundle Size
+   ```bash
+   python app.py
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Frontend
 
-### Making a Progressive Web App
+**Start the React development server on `http://localhost:5000`**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+   From the `frontend` folder, run:
 
-### Advanced Configuration
+   ```bash
+   PORT=5000 npm start # on macOS/Linux
+   set PORT=5000 && npm start # on Windows(CommandPrompt)
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+### Test the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. **Test the Backend API with Postman or cURL**:
 
-### `npm run build` fails to minify
+   - **GET all habits**:
+     ```bash
+     curl -X GET http://localhost:8000/habits
+     ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   - **POST a new habit**:
+     ```bash
+     curl -X POST http://localhost:8000/habits -H "Content-Type: application/json" -d '{"name": "Exercise", "description": "Daily workout", "frequency": 7}'
+     ```
+
+   - **GET all habit logs**:
+     ```bash
+     curl -X GET http://localhost:8000/habitlogs
+     ```
+
+   - **POST a new habit log**:
+     ```bash
+     curl -X POST http://localhost:8000/habitlogs -H "Content-Type: application/json" -d '{"habit_id": 1, "date": "2024-11-22"}'
+     ```
+
+2. **Test the Frontend**:
+
+   - Navigate to the Habit Tracker app running on `http://localhost:5000`.
+   - Add new habits using the form and ensure that the habit list is updated.
+   - Add habit logs for the created habits and check if the logs appear in the habit log section.
+
+---
+
+## Additional Notes
+
+- **Backend API Endpoints**:
+
+   - **GET `/habits`**: Get all habits.
+   - **POST `/habits`**: Add a new habit.
+   - **GET `/habitlogs`**: Get all habit logs.
+   - **POST `/habitlogs`**: Add a new habit log.
+
+- **CORS**:
+   Flask-CORS is used to allow cross-origin requests from the frontend running on a different port (`5000`) while the backend runs on (`8000`).
+
+- **SQLite Database**:
+   The app uses SQLite to store habits and habit logs. The database file will be created in the backend directory (`habit.db`).
+
+---
+
+## Possible Errors
+
+1. **Failed to Fetch Errors**:
+   - Make sure the backend server is running before the frontend. The frontend relies on the backend API to fetch and post data.
+   - Ensure that you’re using the correct API endpoints in the frontend (e.g., `http://localhost:8000/habits`).
+
+2. **CORS Issues**:
+   - If you're encountering CORS-related errors, ensure that `Flask-CORS` is correctly installed and configured on the backend OR use a 
+ browser plugin to allow CORS requests
